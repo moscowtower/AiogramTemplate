@@ -7,10 +7,7 @@ import logging
 import loader
 
 from filters.chat_type import ChatTypeFilter
-from filters.user import UserFilter
 
-from handlers import routers
-from middlewares.locale_middleware import LocaleMiddleware
 
 logger = logging.getLogger(__name__)
 
@@ -23,14 +20,11 @@ async def main():
     logger.error("Starting bot")
     dp = loader.dp
     bot = loader.bot
-    dp.message.middleware(LocaleMiddleware())
-    dp.callback_query.middleware(LocaleMiddleware())
-    dp.message.filter(ChatTypeFilter(chat_type='private'))
-#    dp.include_router(routers.non_sub_router)
 
+    dp.message.filter(ChatTypeFilter(chat_type='private'))
 
     try:
-        #await bot.delete_webhook(drop_pending_updates=True)
+        await bot.delete_webhook(drop_pending_updates=True)
         await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
     finally:
         await bot.session.close()

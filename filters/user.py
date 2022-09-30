@@ -1,7 +1,7 @@
 import datetime
 from typing import Union
 
-from aiogram.dispatcher.filters import BaseFilter
+from aiogram.filters import BaseFilter
 from aiogram.types import Message, CallbackQuery
 from emoji import demojize
 from sqlalchemy import insert, update, select
